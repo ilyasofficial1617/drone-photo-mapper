@@ -1,0 +1,4207 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis -->
+<html xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en-US" class="yui3-js-enabled js flexbox canvas canvastext webgl no-touch hashchange history draganddrop rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms no-csstransforms3d csstransitions video audio svg inlinesvg svgclippaths wf-proximanova-n3-active wf-proximanova-n4-active wf-proximanova-n7-active wf-futurapt-n3-active wf-futurapt-n4-active wf-proximanova-i3-active wf-proximanova-i7-active wf-ibmplexmono-n8-active wf-futurapt-n7-active wf-futurapt-i3-active wf-futurapt-i7-active wf-active gvpvgvgph idc0_346" id="yui_3_17_2_1_1682251996476_76"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  
+  <!-- This is Squarespace. --><!-- stephanie-saephan -->
+<link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1682251996476_376" href="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/dialog-89b254b5c87045b9e1360-min.en-US.css"><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1682251996476_377" href="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/comments-cb7553e34a4da425817c4-min.en-US.css"><script type="text/javascript" async="" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/analytics.js"></script><script type="text/javascript" async="" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/js"></script><script charset="utf-8" id="yui_3_17_2_1_1682251996476_374" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/dialog-aca8d6d645379f4674293-min.en-US.js"></script><script charset="utf-8" id="yui_3_17_2_1_1682251996476_375" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/comments-2cc6dce85833b86889cf8-min.en-US.js"></script><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1682251996476_384" href="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/simple-liking-ef94529873378652e6e86-min.en-US.css"><script charset="utf-8" id="yui_3_17_2_1_1682251996476_383" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/simple-liking-eec025f782ea0a61910bd-min.en-US.js"></script><link charset="utf-8" rel="stylesheet" id="yui_3_17_2_1_1682251996476_387" href="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/social-buttons-1f18e025ea682ade6293a-min.en-US.css"><script charset="utf-8" id="yui_3_17_2_1_1682251996476_386" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/social-buttons-96272bd3aaf971c1fca73-min.en-US.js"></script><!--<base href="">--><base href=".">
+
+<title>Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab</title>
+<meta http-equiv="Accept-CH" content="Sec-CH-UA-Platform-Version, Sec-CH-UA-Model"><link rel="shortcut icon" type="image/x-icon" href="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1610435448941-QHRJAX11YIBWHTSPFGMD/favicon.ico">
+<link rel="canonical" href="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis">
+<link rel="amphtml" href="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis?format=amp">
+<meta name="google-site-verification" content="KWJqOC8xyontCJyC2Rk-1eGj26G4Ux9cKNouJ-fVmk4">
+<meta property="og:site_name" content="open.gis.lab">
+<meta property="og:title" content="Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab">
+<meta property="og:latitude" content="40.7207559">
+<meta property="og:longitude" content="-74.0007613">
+<meta property="og:locality" content="">
+<meta property="og:url" content="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis">
+<meta property="og:type" content="article">
+<meta property="og:description" content="Today’s post is inspired by Joseph Kerski, who works at ESRI doing GIS in Education. You can read his post on  Using the Photos with Locations Tool in Education . It provides some very useful information for on using ESRI software (AGOL) to map and view geotagged photos. We had an interesting discus">
+<meta property="og:image" content="http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="645">
+<meta itemprop="name" content="Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab">
+<meta itemprop="url" content="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis">
+<meta itemprop="description" content="Today’s post is inspired by Joseph Kerski, who works at ESRI doing GIS in Education. You can read his post on  Using the Photos with Locations Tool in Education . It provides some very useful information for on using ESRI software (AGOL) to map and view geotagged photos. We had an interesting discus">
+<meta itemprop="thumbnailUrl" content="http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w">
+<link rel="image_src" href="http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w">
+<meta itemprop="image" content="http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w">
+<meta itemprop="author" content="Stephanie Saephan">
+<meta itemprop="datePublished" content="2020-08-23T16:35:30-0700">
+<meta itemprop="dateModified" content="2022-04-28T15:46:19-0700">
+<meta itemprop="headline" content="Mapping and Viewing Geotagged Photos in QGIS">
+<meta itemprop="publisher" content="open.gis.lab">
+<meta name="twitter:title" content="Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab">
+<meta name="twitter:image" content="http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w">
+<meta name="twitter:url" content="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:description" content="Today’s post is inspired by Joseph Kerski, who works at ESRI doing GIS in Education. You can read his post on  Using the Photos with Locations Tool in Education . It provides some very useful information for on using ESRI software (AGOL) to map and view geotagged photos. We had an interesting discus">
+<meta name="description" content="">
+<link rel="preconnect" href="https://images.squarespace-cdn.com/">
+<script type="text/javascript" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/IGKrDhCLjn2AlOGLsHj_a1fCryXn0-4RvhYq9t6RnvCfeltIfFHN4UJLFRbh52jhWD9hZRZ8ZQmc5eIhFA9kF2wUwDw3jABR5g7FMkG0jAFu-WsoShFGZAsude80ZkoRdhXCHKoyjamTiY8Djhy8ZYmC-Ao1Oco8if37OcBDOcu8OfG0SaBujW48SagyjhmDjhy8ZYmC-Ao1OcFzdP37O1FXZWgGjAoTZPuDjAm3-eB0O1FUiABkZWF3jAF8.js"></script>
+<style type="text/css">@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/1be3c2/00000000000000007735e606/30/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/efe4a5/00000000000000007735e609/30/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/l?subset_id=2&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/d?subset_id=2&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/2555e1/00000000000000007735e603/30/a?subset_id=2&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/40d372/00000000000000007735e607/30/l?subset_id=2&fvd=i3&v=3) format("woff2"),url(https://use.typekit.net/af/40d372/00000000000000007735e607/30/d?subset_id=2&fvd=i3&v=3) format("woff"),url(https://use.typekit.net/af/40d372/00000000000000007735e607/30/a?subset_id=2&fvd=i3&v=3) format("opentype");font-weight:300;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:proxima-nova;src:url(https://use.typekit.net/af/4de20a/00000000000000007735e604/30/l?subset_id=2&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/4de20a/00000000000000007735e604/30/d?subset_id=2&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/4de20a/00000000000000007735e604/30/a?subset_id=2&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:ibm-plex-mono;src:url(https://use.typekit.net/af/d37375/00000000000000007735946a/30/l?subset_id=2&fvd=n8&v=3) format("woff2"),url(https://use.typekit.net/af/d37375/00000000000000007735946a/30/d?subset_id=2&fvd=n8&v=3) format("woff"),url(https://use.typekit.net/af/d37375/00000000000000007735946a/30/a?subset_id=2&fvd=n8&v=3) format("opentype");font-weight:800;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/ae4f6c/000000000000000000010096/27/l?subset_id=2&fvd=n3&v=3) format("woff2"),url(https://use.typekit.net/af/ae4f6c/000000000000000000010096/27/d?subset_id=2&fvd=n3&v=3) format("woff"),url(https://use.typekit.net/af/ae4f6c/000000000000000000010096/27/a?subset_id=2&fvd=n3&v=3) format("opentype");font-weight:300;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/9b05f3/000000000000000000013365/27/l?subset_id=2&fvd=n4&v=3) format("woff2"),url(https://use.typekit.net/af/9b05f3/000000000000000000013365/27/d?subset_id=2&fvd=n4&v=3) format("woff"),url(https://use.typekit.net/af/9b05f3/000000000000000000013365/27/a?subset_id=2&fvd=n4&v=3) format("opentype");font-weight:400;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/309dfe/000000000000000000010091/27/l?subset_id=2&fvd=n7&v=3) format("woff2"),url(https://use.typekit.net/af/309dfe/000000000000000000010091/27/d?subset_id=2&fvd=n7&v=3) format("woff"),url(https://use.typekit.net/af/309dfe/000000000000000000010091/27/a?subset_id=2&fvd=n7&v=3) format("opentype");font-weight:700;font-style:normal;font-stretch:normal;font-display:auto;}@font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/849347/000000000000000000010093/27/l?subset_id=2&fvd=i3&v=3) format("woff2"),url(https://use.typekit.net/af/849347/000000000000000000010093/27/d?subset_id=2&fvd=i3&v=3) format("woff"),url(https://use.typekit.net/af/849347/000000000000000000010093/27/a?subset_id=2&fvd=i3&v=3) format("opentype");font-weight:300;font-style:italic;font-stretch:normal;font-display:auto;}@font-face{font-family:futura-pt;src:url(https://use.typekit.net/af/eb729a/000000000000000000010092/27/l?subset_id=2&fvd=i7&v=3) format("woff2"),url(https://use.typekit.net/af/eb729a/000000000000000000010092/27/d?subset_id=2&fvd=i7&v=3) format("woff"),url(https://use.typekit.net/af/eb729a/000000000000000000010092/27/a?subset_id=2&fvd=i7&v=3) format("opentype");font-weight:700;font-style:italic;font-stretch:normal;font-display:auto;}</style><script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+<script type="text/javascript" crossorigin="anonymous" defer="defer" nomodule="nomodule" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/legacy.js"></script>
+<script type="text/javascript" crossorigin="anonymous" defer="defer" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/modern.js"></script>
+<script type="text/javascript">SQUARESPACE_ROLLUPS = {};</script>
+<script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/extract-css-runtime-0843768cfa37f0c0adc46-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-extract_css_runtime');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/extract-css-runtime-0843768cfa37f0c0adc46-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/extract-css-moment-js-vendor-5082e2dab696b020ac83a-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-extract_css_moment_js_vendor');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/extract-css-moment-js-vendor-5082e2dab696b020ac83a-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/cldr-resource-pack-e6fa1987df62bf405e611-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-cldr_resource_pack');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/cldr-resource-pack-e6fa1987df62bf405e611-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-vendors-stable-dade9d616ff90ebf99b1d-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common_vendors_stable');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/common-vendors-stable-dade9d616ff90ebf99b1d-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-vendors-7f1e337eaa22c7c07dcb1-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common_vendors');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/common-vendors-7f1e337eaa22c7c07dcb1-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/common-a5b526ac93a6931cc0f2a-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-common');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/common-a5b526ac93a6931cc0f2a-min.en-US.js" defer=""></script><script>(function(rollups, name) { if (!rollups[name]) { rollups[name] = {}; } rollups[name].js = ["//assets.squarespace.com/universal/scripts-compressed/performance-05b8f9f40d9f539050c2a-min.en-US.js"]; })(SQUARESPACE_ROLLUPS, 'squarespace-performance');</script>
+<script crossorigin="anonymous" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/performance-05b8f9f40d9f539050c2a-min.en-US.js" defer=""></script><script data-name="static-context">Static = window.Static || {}; Static.SQUARESPACE_CONTEXT = {"facebookAppId":"314192535267336","facebookApiVersion":"v6.0","rollups":{"squarespace-announcement-bar":{"js":"//assets.squarespace.com/universal/scripts-compressed/announcement-bar-5d2b5df82600264484d91-min.en-US.js"},"squarespace-audio-player":{"css":"//assets.squarespace.com/universal/styles-compressed/audio-player-702bf18174efe0acaa8ce-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/audio-player-5e3c9956e0598eb0dbd90-min.en-US.js"},"squarespace-blog-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/blog-collection-list-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/blog-collection-list-44ab3d6f12cddbd366f28-min.en-US.js"},"squarespace-calendar-block-renderer":{"css":"//assets.squarespace.com/universal/styles-compressed/calendar-block-renderer-49c4a5f3dae67a728e3f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/calendar-block-renderer-5910a80c0fdb357a85a80-min.en-US.js"},"squarespace-chartjs-helpers":{"css":"//assets.squarespace.com/universal/styles-compressed/chartjs-helpers-53c004ac7d4bde1c92e38-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/chartjs-helpers-bc575bb6dcec70cb5a94d-min.en-US.js"},"squarespace-comments":{"css":"//assets.squarespace.com/universal/styles-compressed/comments-cb7553e34a4da425817c4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/comments-2cc6dce85833b86889cf8-min.en-US.js"},"squarespace-dialog":{"css":"//assets.squarespace.com/universal/styles-compressed/dialog-89b254b5c87045b9e1360-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/dialog-aca8d6d645379f4674293-min.en-US.js"},"squarespace-events-collection":{"css":"//assets.squarespace.com/universal/styles-compressed/events-collection-49c4a5f3dae67a728e3f4-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/events-collection-1bfc5e43269bf7ca432e9-min.en-US.js"},"squarespace-form-rendering-utils":{"js":"//assets.squarespace.com/universal/scripts-compressed/form-rendering-utils-7f0b673eec43fadca1f5d-min.en-US.js"},"squarespace-forms":{"css":"//assets.squarespace.com/universal/styles-compressed/forms-4a16a8a8c965386db2173-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/forms-ca3b1ff517f2014af47d7-min.en-US.js"},"squarespace-gallery-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/gallery-collection-list-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/gallery-collection-list-ccf378030ccbdb6e9f20a-min.en-US.js"},"squarespace-image-zoom":{"css":"//assets.squarespace.com/universal/styles-compressed/image-zoom-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/image-zoom-95bf63ca6dc7a85183665-min.en-US.js"},"squarespace-pinterest":{"css":"//assets.squarespace.com/universal/styles-compressed/pinterest-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/pinterest-c37730f8d94081583214d-min.en-US.js"},"squarespace-popup-overlay":{"css":"//assets.squarespace.com/universal/styles-compressed/popup-overlay-948192219c3257f767ec5-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/popup-overlay-ec3b76b58d8b230716b44-min.en-US.js"},"squarespace-product-quick-view":{"css":"//assets.squarespace.com/universal/styles-compressed/product-quick-view-4a16a8a8c965386db2173-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/product-quick-view-9de3f31a885afc653b5c9-min.en-US.js"},"squarespace-products-collection-item-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-item-v2-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/products-collection-item-v2-e430d4e43f2f6e2061446-min.en-US.js"},"squarespace-products-collection-list-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-list-v2-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/products-collection-list-v2-86cb9526983c4269307f0-min.en-US.js"},"squarespace-search-page":{"css":"//assets.squarespace.com/universal/styles-compressed/search-page-9d0a55de1efafbb9218e1-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/search-page-794f32f824de00088a2b6-min.en-US.js"},"squarespace-search-preview":{"js":"//assets.squarespace.com/universal/scripts-compressed/search-preview-4e3597a2ba4a93fcfb993-min.en-US.js"},"squarespace-simple-liking":{"css":"//assets.squarespace.com/universal/styles-compressed/simple-liking-ef94529873378652e6e86-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/simple-liking-eec025f782ea0a61910bd-min.en-US.js"},"squarespace-social-buttons":{"css":"//assets.squarespace.com/universal/styles-compressed/social-buttons-1f18e025ea682ade6293a-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/social-buttons-96272bd3aaf971c1fca73-min.en-US.js"},"squarespace-tourdates":{"css":"//assets.squarespace.com/universal/styles-compressed/tourdates-3d55c64c25996c7633fc2-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/tourdates-fd5d346c60daeccebceab-min.en-US.js"},"squarespace-website-overlays-manager":{"css":"//assets.squarespace.com/universal/styles-compressed/website-overlays-manager-7cecc648f858e6f692130-min.en-US.css","js":"//assets.squarespace.com/universal/scripts-compressed/website-overlays-manager-d4df2ac286f72488bfe9d-min.en-US.js"}},"pageType":50,"website":{"id":"56f6ee5f8a65e2431330aac8","identifier":"stephanie-saephan","websiteType":1,"contentModifiedOn":1678811748144,"cloneable":false,"hasBeenCloneable":false,"siteStatus":{},"language":"en-US","timeZone":"Canada/Pacific","machineTimeZoneOffset":-25200000,"timeZoneOffset":-25200000,"timeZoneAbbr":"PDT","siteTitle":"open.gis.lab","fullSiteTitle":"Mapping and Viewing Geotagged Photos in QGIS \u2014 open.gis.lab","siteTagLine":"An Open Learning Lab in Portland","siteDescription":"<p>An Open Source GIS Learning Lab - Free tutorials on using ArcGIS, QGIS, and other open source software.</p>","logoImageId":"624c7d7e6d45666579766536","shareButtonOptions":{"6":true,"1":true,"4":true,"2":true,"3":true},"logoImageUrl":"//images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/050558d3-26f7-4d30-9bea-90e77c421b66/OGLLOGO_80pt.jpg","authenticUrl":"https://opengislab.com","internalUrl":"https://stephanie-saephan.squarespace.com","baseUrl":"https://opengislab.com","primaryDomain":"opengislab.com","sslSetting":3,"isHstsEnabled":true,"socialAccounts":[{"serviceId":20,"userId":"stephanie@opengislab.com","screenname":"stephanie@opengislab.com","addedOn":1522305815540,"profileUrl":"mailto:stephanie@opengislab.com","iconEnabled":true,"serviceName":"email"},{"serviceId":23,"userId":"36218132","userName":"StephSaephan","screenname":"null","addedOn":1541908025703,"profileUrl":"https://github.com/StephSaephan","iconUrl":"https://avatars2.githubusercontent.com/u/36218132?v=4","iconEnabled":true,"serviceName":"github"},{"serviceId":14,"userId":"JtPED54Vat","userName":"stephanie-saephan","screenname":"Stephanie Saephan","addedOn":1550046206808,"profileUrl":"http://www.linkedin.com/in/stephanie-saephan","iconUrl":"https://media.licdn.com/dms/image/C4E03AQEhkyktTawMHg/profile-displayphoto-shrink_100_100/0?e=1555545600&v=beta&t=AzV4Gf-dJyEbgz2SqkNZFWm0x7oytFMgtSK7stFvHkQ","iconEnabled":true,"serviceName":"linkedin"}],"typekitId":"","statsMigrated":false,"imageMetadataProcessingEnabled":false,"screenshotId":"53d6f427ebc7192332942e83764fc7663816bade79025c3b8c6638ea22f61eb2","captchaSettings":{"siteKey":"","enabledForDonations":false},"showOwnerLogin":false},"websiteSettings":{"id":"56f6ee5f8a65e2431330aaca","websiteId":"56f6ee5f8a65e2431330aac8","type":"Personal","subjects":[],"country":"US","state":"OR","simpleLikingEnabled":true,"mobileInfoBarSettings":{"isContactEmailEnabled":false,"isContactPhoneNumberEnabled":false,"isLocationEnabled":false,"isBusinessHoursEnabled":false},"commentLikesAllowed":true,"commentAnonAllowed":true,"commentThreaded":true,"commentApprovalRequired":false,"commentAvatarsOn":false,"commentSortType":2,"commentFlagThreshold":3,"commentFlagsAllowed":true,"commentEnableByDefault":true,"commentDisableAfterDaysDefault":0,"disqusShortname":"","commentsEnabled":true,"contactPhoneNumber":"","storeSettings":{"returnPolicy":null,"termsOfService":null,"privacyPolicy":null,"expressCheckout":false,"continueShoppingLinkUrl":"/","useLightCart":false,"showNoteField":false,"shippingCountryDefaultValue":"US","billToShippingDefaultValue":false,"showShippingPhoneNumber":true,"isShippingPhoneRequired":false,"showBillingPhoneNumber":true,"isBillingPhoneRequired":false,"currenciesSupported":["CHF","HKD","MXN","EUR","DKK","USD","CAD","MYR","NOK","THB","AUD","SGD","ILS","PLN","GBP","CZK","SEK","NZD","PHP","RUB"],"defaultCurrency":"USD","selectedCurrency":"USD","measurementStandard":1,"showCustomCheckoutForm":false,"checkoutPageMarketingOptInEnabled":false,"enableMailingListOptInByDefault":true,"sameAsRetailLocation":false,"merchandisingSettings":{"scarcityEnabledOnProductItems":false,"scarcityEnabledOnProductBlocks":false,"scarcityMessageType":"DEFAULT_SCARCITY_MESSAGE","scarcityThreshold":10,"multipleQuantityAllowedForServices":true,"restockNotificationsEnabled":false,"restockNotificationsMailingListSignUpEnabled":false,"relatedProductsEnabled":false,"relatedProductsOrdering":"random","soldOutVariantsDropdownDisabled":false,"productComposerOptedIn":false,"productComposerABTestOptedOut":false,"productReviewsEnabled":false,"displayImportedProductReviewsEnabled":false,"hasOptedToCollectNativeReviews":false},"isLive":false,"multipleQuantityAllowedForServices":true},"useEscapeKeyToLogin":true,"ssBadgeType":1,"ssBadgePosition":4,"ssBadgeVisibility":1,"ssBadgeDevices":1,"pinterestOverlayOptions":{"mode":"disabled","size":"small","shape":"rect"},"ampEnabled":true},"cookieSettings":{"isCookieBannerEnabled":false,"isRestrictiveCookiePolicyEnabled":false,"isRestrictiveCookiePolicyAbsolute":false,"cookieBannerText":"","cookieBannerTheme":"","cookieBannerVariant":"","cookieBannerPosition":"","cookieBannerCtaVariant":"","cookieBannerCtaText":"","cookieBannerAcceptType":"OPT_IN","cookieBannerOptOutCtaText":""},"websiteCloneable":false,"collection":{"title":"Blog","id":"56ff702537013bada72bf296","fullUrl":"/blog","publicCommentCount":0,"type":1,"permissionType":1},"item":{"title":"Mapping and Viewing Geotagged Photos in QGIS","id":"5f42c31fd9abee0b99127e87","fullUrl":"/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis","publicCommentCount":22,"commentState":2,"recordType":1},"subscribed":false,"appDomain":"squarespace.com","templateTweakable":true,"tweakJSON":{"TGutter":"3%","TMaxWidth":"400","TPerRow":"3","gallery-auto-play":"false","galleryPlaySpeed":"3","hide-thumbnail-titles":"false","outerPadding":"40px","pagePadding":"10px","product-gallery-auto-crop":"false","product-image-auto-crop":"true","thumbnail-layout":"Basic Grid","topPadding":"10px","tweak-v1-related-products-title-spacing":"50px"},"templateId":"4fd11f32c4aad9b01c9e624c","templateVersion":"7","pageFeatures":[1,2,4],"gmRenderKey":"QUl6YVN5Q0JUUk9xNkx1dkZfSUUxcjQ2LVQ0QWVUU1YtMGQ3bXk4","templateScriptsRootUrl":"https://static1.squarespace.com/static/ta/4fd1028ee4b02be53c65dfb3/1359/scripts/","betaFeatureFlags":["order_status_page_checkout_landing_enabled","fluid_engine_clean_up_grid_contextual_change","block_annotations_revamp","send_local_pickup_ready_email","commerce_order_status_access","commerce_clearpay","viewer-role-contributor-invites","crm_default_newsletter_block_to_campaigns","multilingual_transactional_emails","customer_accounts_email_verification","site_user_email_change","campaigns_content_editing_survey","member_areas_spanish_interviews","campaigns_new_image_layout_picker","nested_categories_migration_enabled","crm_waitlist_enforce_recaptcha_v3_enterprise","marketing_landing_page","crm_enable_recaptcha_v3_enterprise","campaigns_thumbnail_layout","accounting_orders_sync","member_areas_schedule_interview","campaigns_import_discounts","campaigns_discount_section_in_automations","commerce_site_visitor_metrics","campaigns_asset_picker","crm_retention_segment","crm_remove_subscriber","campaigns_discount_section_in_blasts","commerce_etsy_product_import","commerce_restock_notifications","member_areas_provisioning_service","customer_account_creation_recaptcha","is_feature_gate_refresh_enabled","commerce_etsy_shipping_import","crm_enforce_recaptcha_v3_enterprise","campaigns_global_uc_ab","fluid_engine","campaigns_show_featured_templates","scripts_defer","background_art_onboarding"],"videoAssetsFeatureFlags":["mux-data-video-collection","mux-data-course-collection"],"impersonatedSession":false,"tzData":{"zones":[[-480,"Canada","P%sT",null]],"rules":{"Canada":[[1974,2006,null,"Oct","lastSun","2:00","0","S"],[1987,2006,null,"Apr","Sun>=1","2:00","1:00","D"],[2007,"max",null,"Mar","Sun>=8","2:00","1:00","D"],[2007,"max",null,"Nov","Sun>=1","2:00","0","S"]]}},"showAnnouncementBar":false,"recaptchaEnterpriseContext":{"recaptchaEnterpriseSiteKey":"6LdDFQwjAAAAAPigEvvPgEVbb7QBm-TkVJdDTlAv"},"i18nContext":{"timeZoneData":{"id":"America/Vancouver","name":"Pacific Time"}}};</script><script type="module">SquarespaceFonts.loadViaContext(); Squarespace.load(window);</script>
+<script data-sqs-type="imageloader-bootstrapper" type="module">if(window.ImageLoader) window.ImageLoader.bootstrap({}, document);</script>
+<script type="module">Squarespace.afterBodyLoad(Y);</script>
+<link rel="alternate" type="application/rss+xml" title="RSS Feed" href="https://opengislab.com/blog?format=rss">
+<script type="application/ld+json">{"url":"https://opengislab.com","name":"open.gis.lab","description":"<p>An Open Source GIS Learning Lab - Free tutorials on using ArcGIS, QGIS, and other open source software.</p>","image":"//images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/050558d3-26f7-4d30-9bea-90e77c421b66/OGLLOGO_80pt.jpg","@context":"http://schema.org","@type":"WebSite"}</script><script type="application/ld+json">{"name":"Mapping and Viewing Geotagged Photos in QGIS \u2014 open.gis.lab","url":"https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis","datePublished":"2020-08-23T16:35:30-0700","dateModified":"2022-04-28T15:46:19-0700","headline":"Mapping and Viewing Geotagged Photos in QGIS","author":"Stephanie Saephan","publisher":{"name":"open.gis.lab","logo":{"@type":"ImageObject","url":"https://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/t/624c7d7e6d45666579766536/1678811748144/"},"@context":"http://schema.org","@type":"Organization"},"image":"http://static1.squarespace.com/static/56f6ee5f8a65e2431330aac8/56ff702537013bada72bf296/5f42c31fd9abee0b99127e87/1651185979443/geotaggedPhotos.gif?format=1500w","@context":"http://schema.org","@type":"Article"}</script><link rel="stylesheet" type="text/css" href="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/site.css"><script>Static.COOKIE_BANNER_CAPABLE = true;</script>
+<script async="" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/js(1)"></script><script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('set', 'developer_id.dZjQwMz', true);gtag('config', 'UA-78894884-1');gtag('config', 'G-9HREW0N5QZ');</script><!-- End of Squarespace Headers -->
+<style type="text/css">.CSSTG-group {position:relative;display:block;}
+.CSSTG-child {backface-visibility:hidden;filter:blur(1);}
+.CSSTG-wrappedChild {padding:0.1px;margin:-0.1px;}
+</style><style type="text/css">.CSSTG-ExpandCollapse-expand {overflow:hidden;transition:max-height .2s ease-in-out, opacity .24s ease .08s;}
+.CSSTG-ExpandCollapse-collapse {overflow:hidden;transition:max-height .2s ease-in-out, opacity .16s ease;}
+</style><style type="text/css">.CSSTG-Dissolve-dissolve {overflow:hidden;transition:opacity .33s ease, min-height .33s ease, max-height .33s ease;}
+.CSSTG-Dissolve-leave {overflow:hidden;position:absolute;top:0;left:0;right:0;bottom:0;}
+.CSSTG-Dissolve-dissolve.CSSTG-Dissolve-async {transition:opacity .33s ease .66s, min-height .33s ease .33s, max-height .33s ease .33s;}
+.CSSTG-Dissolve-leave.CSSTG-Dissolve-async {transition:opacity .33s ease;}
+</style><style type="text/css">.CSSTG-Slide-group {overflow:hidden;}
+.CSSTG-Slide-slide {overflow:hidden;transition:transform .26s ease, min-height .26s ease, max-height .26s ease;}
+.CSSTG-Slide-leave {overflow:hidden;position:absolute;top:0;left:0;right:0;bottom:0;}
+</style><style type="text/css">.CSSTG-Reorderable-enter {transition:opacity .3s ease .2s;}
+.CSSTG-Reorderable-leave {position:absolute !important;top:0;left:0;transition:opacity .3s ease;}
+.CSSTG-Reorderable-move {transition:transform .36s ease;z-index:1;}
+.CSSTG-Reorderable-leave ~ .CSSTG-Reorderable-move {transition-delay:.2s;}
+</style></head>
+
+<body class="blog-sidebar-display-right index-thumb-title-position-below index-item-layout-auto thumbnail-layout-basic-grid thumbnails-on-open-page-show-all   layout-style-left page-borders-thin underline-body-links gallery-page-controls-tiny-thumbnails  social-icon-style-round   show-category-navigation   event-show-past-events event-thumbnails event-thumbnail-size-32-standard event-date-label  event-list-show-cats event-list-date event-list-time event-list-address   event-icalgcal-links  event-excerpts  event-item-back-link    product-list-titles-under product-list-alignment-center product-item-size-11-square product-image-auto-crop product-gallery-size-11-square  show-product-price show-product-item-nav product-social-sharing tweak-v1-related-products-image-aspect-ratio-11-square tweak-v1-related-products-details-alignment-center newsletter-style-dark hide-opentable-icons opentable-style-dark small-button-style-solid small-button-shape-square medium-button-style-solid medium-button-shape-square large-button-style-solid large-button-shape-square image-block-poster-text-alignment-center image-block-card-dynamic-font-sizing image-block-card-content-position-center image-block-card-text-alignment-center image-block-overlap-dynamic-font-sizing image-block-overlap-content-position-center image-block-overlap-text-alignment-left image-block-collage-dynamic-font-sizing image-block-collage-content-position-top image-block-collage-text-alignment-left  image-block-stack-text-alignment-left button-style-solid button-corner-style-rounded tweak-product-quick-view-button-style-floating tweak-product-quick-view-button-position-bottom tweak-product-quick-view-lightbox-excerpt-display-truncate tweak-product-quick-view-lightbox-show-arrows tweak-product-quick-view-lightbox-show-close-button tweak-product-quick-view-lightbox-controls-weight-light native-currency-code-usd view-item collection-type-blog collection-layout-default collection-56ff702537013bada72bf296 mobile-style-available logo-image has-primary-nav" id="item-5f42c31fd9abee0b99127e87">
+
+  <div id="canvas">
+
+      
+  <div id="mobileNav" class="">
+    <div id="mobileNavWrapper" class="wrapper">
+      <nav class="main-nav mobileNav">
+        <ul>
+          
+
+            
+              <li class="page-collection">
+                
+                  <a href="https://opengislab.com/">Home</a>
+                
+                
+              </li>
+            
+
+          
+
+            
+              <li class="blog-collection active-link">
+                
+                  <a href="https://opengislab.com/blog">Blog</a>
+                
+                
+              </li>
+            
+
+          
+
+            
+              <li class="page-collection">
+                
+                  <a href="https://opengislab.com/about-me">About Me</a>
+                
+                
+              </li>
+            
+
+          
+          
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <div id="mobileMenuLink"><a>Menu</a></div>
+
+
+
+    <header id="header">
+      <div id="logo" data-content-field="site-title">
+        
+        <h1 class="logo" data-shrink-original-size="32" style="letter-spacing: 0.03125em;"><a href="https://opengislab.com/"><img src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/OGLLOGO_80pt.jpg" alt="open.gis.lab"></a></h1>
+        <div class="logo-subtitle" data-shrink-original-size="12" style="letter-spacing: 0.25em;">An Open Learning Lab in Portland</div>
+        
+      </div>
+      <script type="module">
+        Y.use('squarespace-ui-base', function(Y) {
+          Y.all("#header .logo, #header .logo-subtitle").each(function (text) {
+            text.plug(Y.Squarespace.TextShrink, {
+              parentEl: Y.one('#header'),
+              triggerWidth: 750
+            });
+          });
+        });
+
+        // Show spinner on page load if loading bookmarked url
+        if (window.location.hash && window.location.hash !== '#') {
+          document.querySelector('body').className += ' index-loading';
+        }
+      </script>
+      <div id="topNav" data-content-field="navigation">
+<nav class="main-nav">
+  <ul>
+  
+  
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="https://opengislab.com/">Home</a>
+          
+
+          
+
+
+        
+
+      </li>
+
+  
+
+      <li class="blog-collection active-link">
+
+        
+
+          
+            <a href="https://opengislab.com/blog">Blog</a>
+          
+
+          
+
+
+        
+
+      </li>
+
+  
+
+      <li class="page-collection">
+
+        
+
+          
+            <a href="https://opengislab.com/about-me">About Me</a>
+          
+
+          
+
+
+        
+
+      </li>
+
+  
+  
+  
+  </ul>
+</nav>
+</div>
+
+    </header>
+
+    <div class="page-divider"></div>
+
+    <div class="extra-wrapper page-header">
+      <div class="sqs-layout sqs-grid-12 columns-12 empty" data-layout-label="Header Content: Blog" data-type="block-field" id="page-header-56ff702537013bada72bf296"><div class="row sqs-row"><div class="col sqs-col-12 span-12"></div></div></div>
+    </div>
+
+    <section id="page" role="main" data-content-field="main-content" style="min-height: 459.719px;">
+      <!-- CATEGORY NAV -->
+      
+      <div class="article-wrapper" id="yui_3_17_2_1_1682251996476_75">
+
+
+
+<article class="hentry category-2020 tag-qgis-geotagged-photos tag-qgis2web-photos-popup tag-map-geotagged-photos author-stephanie-saephan post-type-text" id="article-5f42c31fd9abee0b99127e87" data-item-id="5f42c31fd9abee0b99127e87">
+
+  <!--SPECIAL CONTENT-->
+
+  
+
+
+  <!--POST HEADER-->
+
+  <header>
+		<h1 class="entry-title">
+      
+        <a href="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis" data-content-field="title">Mapping and Viewing Geotagged Photos in QGIS</a>
+      
+    </h1>
+    <div class="meta">
+      <span class="date"><time class="published" datetime="2020-08-23">August 23, 2020</time></span>
+    </div>
+  </header>
+
+  <!--POST BODY-->
+
+
+  <div class="body entry-content" id="yui_3_17_2_1_1682251996476_74"><div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Post Body" data-type="item" data-updated-on="1598210899047" id="item-5f42c31fd9abee0b99127e87"><div class="row sqs-row" id="yui_3_17_2_1_1682251996476_73"><div class="col sqs-col-12 span-12" id="yui_3_17_2_1_1682251996476_72"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-7340a11e26576bb36c7c"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_670">
+
+<p class="" style="white-space:pre-wrap;">Today’s post is inspired by Joseph Kerski, who works at ESRI doing GIS in Education. You can read his post on<a href="https://community.esri.com/community/education/blog/2020/03/10/using-photos-with-locations-tool-in-education" target="_blank"> Using the Photos with Locations Tool in Education</a>. It provides some very useful information for on using ESRI software (AGOL) to map and view geotagged photos. We had an interesting discussion on teaching GIS in the academia (although I am no longer in academia - I still enjoy teaching and doing trainings). You can get a free public ArcGIS Online (AGOL) account if you’d like to give it a try. If you are a student, you can look into the <a href="https://community.esri.com/community/education/blog/2020/07/14/learn-arcgis-student-program" target="_blank">Learn ArcGIS Student Program </a>(launching September 1, 2020) that gives qualified students free access to AGOL and ArcGIS Pro for a year through a membership in the Learn ArcGIS organization. I think it’s good idea to learn both ArcGIS and QGIS.</p><p class="" style="white-space:pre-wrap;" id="yui_3_17_2_1_1682251996476_669">Anyway, enough on ArcGIS. I thought I would a complementary posting on mapping and viewing geotagged photos in QGIS. If you have a need to map and view your geotagged photos then this post is for you. A geotagged photo has associated geographic location added to it by a process called geotagging. The geographic information (latitude, longitude, altitude, bearing or direction, and date/time stamp, etc.) are stored in the image’s EXIF header. If you have ever taken photos with your smartphone then most likely your photos as geotagged (assuming geolocation is enabled on your phone). Geotagged photo can be mapped and viewed in QGIS. </p><p class="" style="white-space:pre-wrap;">The only requirement to this short tutorial is that you must have photos that are already geotagged. Also, if you wan to create a web map then you need to have qgis2web plugin installed. As for QGIS version, I am using QGIS 3.14 Pi.</p><h2 style="white-space:pre-wrap;">Step 1: Import Geotagged Photos</h2><p class="" style="white-space:pre-wrap;">  In QGIS: Go to the Processing Toolbar panel. If you don’t see the Processing Toolbar Panel then go to Processing Menu &gt;&gt; Toolbar.</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598211388214_9641"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_71">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_70">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:634px;" id="yui_3_17_2_1_1682251996476_69">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_68">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:37.3817024230957%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_67">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598213926678-LI99NMXSBWXVRT8KUYEQ/Fig0001.jpg" alt="Fig0001.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598213926678-LI99NMXSBWXVRT8KUYEQ/Fig0001.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598213926678-LI99NMXSBWXVRT8KUYEQ/Fig0001.jpg" data-image-dimensions="634x237" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42cf26ef576864da0dceda" data-type="image" style="left: 0%; top: 0%; width: 100%; height: 100%; position: absolute;" alt="Fig0001.jpg" data-image-resolution="750w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0001.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598211388214_11661"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">  In the Processing Toolbar panel &gt;&gt; <strong>Vector Creation &gt;&gt; Double click on Import Geotagged Photos.</strong> </p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-aspect-ratio="74.37106918238993" data-block-type="5" id="block-yui_3_17_2_1_1598211388214_12161"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_94">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_93">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:636px;" id="yui_3_17_2_1_1682251996476_92">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_91">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:74.3710708618164%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_90">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214035475-HGMQLML7LJ13VYRNX5NP/Fig0002.jpg" alt="Fig0002.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214035475-HGMQLML7LJ13VYRNX5NP/Fig0002.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214035475-HGMQLML7LJ13VYRNX5NP/Fig0002.jpg" data-image-dimensions="636x646" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42cf921f6b051d9f69ebf0" data-type="image" style="left: 0%; top: -18.2875%; width: 100%; height: 136.575%; position: absolute;" alt="Fig0002.jpg" data-image-resolution="750w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0002.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598211388214_9931"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;"> <strong> </strong>In the Import Geotagged Photos window: </p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Input Folder: Browse to where your photos are stored</p></li><li><p class="" style="white-space:pre-wrap;">Photos [optional]: Click the drop down arrow &gt;&gt; Save to File. Select a file format. In this example, I’m just saving as a SHP.</p></li><li><p class="" style="white-space:pre-wrap;">Click Run</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598211388214_14106"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_112">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_111">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2159px;" id="yui_3_17_2_1_1682251996476_110">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_109">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:44.65030288696289%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_108">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214122096-USPKQ2UBREQZJ4FHC3FE/Fig0003.jpg" alt="Fig0003.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214122096-USPKQ2UBREQZJ4FHC3FE/Fig0003.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598214122096-USPKQ2UBREQZJ4FHC3FE/Fig0003.jpg" data-image-dimensions="2159x964" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42cfe726f6c17cdf130180" data-type="image" style="left: -0.0342103%; top: 0%; width: 100.068%; height: 100%; position: absolute;" alt="Fig0003.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0003.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598211388214_17141"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">After running the tool, you should have the point file added to your map. If you open up the attribute table of the point file, you should see something similar to the table below. <strong>Note that photo field contains the file path to the photos </strong>- you use this field below in the HTML Map Tip and to “symbolize” the points later.</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598215659669_13219"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_130">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_129">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1992px;" id="yui_3_17_2_1_1682251996476_128">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_127">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:26.757028579711914%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_126">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217247196-DFAYEE2WHNXCDCXINO3P/Fig0033.jpg" alt="Fig0033.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217247196-DFAYEE2WHNXCDCXINO3P/Fig0033.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217247196-DFAYEE2WHNXCDCXINO3P/Fig0033.jpg" data-image-dimensions="1992x533" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42dc1d7851a152fd25eb78" data-type="image" style="left: -0.0600593%; top: 0%; width: 100.12%; height: 100%; position: absolute;" alt="Fig0033.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0033.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598215659669_13508"><div class="sqs-block-content">
+
+<h2 style="white-space:pre-wrap;">Step 2: View Photos in Popup</h2><p class="" style="white-space:pre-wrap;">Open the point layer properties:</p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Go to the Display option. </p></li><li><p class="" style="white-space:pre-wrap;">For HTML Map Tip: you can just simple use the &lt;img&gt; HTML tag with the source to your photo.</p></li><li><p class="" style="white-space:pre-wrap;">Click Ok with done</p></li></ol><p class="" style="white-space:pre-wrap;">Here is my example using the photo field (from attribute table). Note if file path is local - that is on your local drive then you will need to include <strong>file:/// </strong>to indicate the photo stored locally.</p><p class="" style="white-space:pre-wrap;">Simple example:<strong> &lt;img src="file:///[% photo %]" width="350" height="250"&gt;</strong></p><p class="" style="white-space:pre-wrap;">Another example: description is a new field I added to my attribute (see step further down)<br>&lt;table&gt;<br>	&lt;tr&gt;<br>    	&lt;th&gt;[% descriptio %]&lt;/th&gt;<br>	&lt;/tr&gt; <br>	&lt;tr&gt;<br>	&lt;th&gt;&lt;img src="file:///[% photo %]" width="350" height="250"&gt;&lt;/th&gt;<br>	&lt;/tr&gt;<br>&lt;/table&gt;</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598215659669_10136"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_148">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_147">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:1654px;" id="yui_3_17_2_1_1682251996476_146">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_145">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:66.384521484375%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_144">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598216854657-49AA6H2UNQSWVTS4477W/Fig0006.jpg" alt="Fig0006.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598216854657-49AA6H2UNQSWVTS4477W/Fig0006.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598216854657-49AA6H2UNQSWVTS4477W/Fig0006.jpg" data-image-dimensions="1654x1098" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42da95e79b782feee0ddd5" data-type="image" style="left: 0%; top: -0.0303179%; width: 100%; height: 100.061%; position: absolute;" alt="Fig0006.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0006.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598215659669_10426"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">To view the photos in a popup:</p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Turn on or enable the Map Tip and </p></li><li><p class="" style="white-space:pre-wrap;">Hover your mouse on a point on your map to view your photo. Note my photo also include a description at the top — which you can add by editing the attribute table (see Optional Steps below)</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598215659669_18188"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_166">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_165">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2500px;" id="yui_3_17_2_1_1682251996476_164">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_163">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:53.7599983215332%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_162">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217962629-I22PE34D93G1RTP53UJA/Fig0014.jpg" alt="Fig0014.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217962629-I22PE34D93G1RTP53UJA/Fig0014.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598217962629-I22PE34D93G1RTP53UJA/Fig0014.jpg" data-image-dimensions="2500x1344" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42dee92428047f125614bf" data-type="image" style="left: -0.0109376%; top: 0%; width: 100.022%; height: 100%; position: absolute;" alt="Fig0014.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0014.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598215659669_18477"><div class="sqs-block-content">
+
+<h2 style="white-space:pre-wrap;">Step 3: Show Direction Photos were Taken (OPTIONAL)</h2><p class="" style="white-space:pre-wrap;">If you want to show the direction in which the photos were taken, you can do that. Just use an arrow symbol and rotation based on the Direction field (that is in your attribute table).</p><p class="" style="white-space:pre-wrap;">Open up the Layer Properties:</p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Go to Symbology</p></li><li><p class="" style="white-space:pre-wrap;">Select a Simple Marker</p></li><li><p class="" style="white-space:pre-wrap;">Select arrow symbol or whatever symbol you want</p></li><li><p class="" style="white-space:pre-wrap;">Rotation: Click the drop down arrow &gt;&gt; Field Type &gt;&gt; Direction</p></li><li><p class="" style="white-space:pre-wrap;">Click OK and you should see the arrow symbol pointing in the direction that the photo was taken</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_12153"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_184">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_183">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2244px;" id="yui_3_17_2_1_1682251996476_182">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_181">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:68.04812622070312%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_180">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598218869384-81D5HL263FLJHO47BRMB/Fig0019.jpg" alt="Fig0019.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598218869384-81D5HL263FLJHO47BRMB/Fig0019.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598218869384-81D5HL263FLJHO47BRMB/Fig0019.jpg" data-image-dimensions="2244x1527" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42e26e1f6b051d9f6c828d" data-type="image" style="left: -0.0271705%; top: 0%; width: 100.054%; height: 100%; position: absolute;" alt="Fig0019.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0019.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_12443"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">Here is my example. I just made copies of my geotagged photo point layer and showed it as points and arrow to indicate direction.</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_15839"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_202">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_201">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2500px;" id="yui_3_17_2_1_1682251996476_200">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_199">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:45.71999740600586%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_198">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219198052-MY0Y38V3KVS2P6JE3KT7/Fig0020.jpg" alt="Fig0020.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219198052-MY0Y38V3KVS2P6JE3KT7/Fig0020.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219198052-MY0Y38V3KVS2P6JE3KT7/Fig0020.jpg" data-image-dimensions="2500x1143" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42e3b1b398394e2d89917d" data-type="image" style="left: -0.0269913%; top: 0%; width: 100.054%; height: 100%; position: absolute;" alt="Fig0020.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0020.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_16128"><div class="sqs-block-content">
+
+<h2 style="white-space:pre-wrap;">Step 3A: Symbolize Points Using the Photos (OPTIONAL)</h2><p class="" style="white-space:pre-wrap;">So what if you wanted to show the point locations using the photos themselves? You can do this with the raster </p><p class="" style="white-space:pre-wrap;">Open up Layer Properties &gt;&gt; </p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Go to Symbology</p></li><li><p class="" style="white-space:pre-wrap;">Click on Simple Marker </p></li><li><p class="" style="white-space:pre-wrap;">Symbol Layer Type: click the drop down &gt;&gt; Raster Image Marker</p></li><li><p class="" style="white-space:pre-wrap;">Click the Data Define Override button &gt;&gt; Field Type &gt;&gt; Photo (this is field in your attribute table)</p></li><li><p class="" style="white-space:pre-wrap;">Make any other changes to the size if you want (e.g. size = 30 to make thumbnail images bigger)</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_36565"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_220">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_219">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2179px;" id="yui_3_17_2_1_1682251996476_218">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_217">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:68.97659301757812%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_216">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219488938-K7KZIRPGDUE7MRGOAML2/Fig0021.jpg" alt="Fig0021.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219488938-K7KZIRPGDUE7MRGOAML2/Fig0021.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598219488938-K7KZIRPGDUE7MRGOAML2/Fig0021.jpg" data-image-dimensions="2179x1503" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42e4dea354d120158b858b" data-type="image" style="left: 0%; top: -0.0152868%; width: 100%; height: 100.031%; position: absolute;" alt="Fig0021.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0021.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_36854"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">Here is what my example looks like, using the photos as raster images to symbolize my point locations.</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_40085"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_238">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_237">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2099px;" id="yui_3_17_2_1_1682251996476_236">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_235">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:61.55311965942383%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_234">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598220835552-BMM2J3MLH4137B31SO7B/Fig0022.jpg" alt="Fig0022.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598220835552-BMM2J3MLH4137B31SO7B/Fig0022.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598220835552-BMM2J3MLH4137B31SO7B/Fig0022.jpg" data-image-dimensions="2099x1292" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42ea21f186f763e2585905" data-type="image" style="left: 0%; top: -0.0361058%; width: 100%; height: 100.072%; position: absolute;" alt="Fig0022.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0022.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_40374"><div class="sqs-block-content">
+
+<h2 style="white-space:pre-wrap;">Step 4: Create Web Map with Popup (OPTIONAL)</h2><p class="" style="white-space:pre-wrap;">For this portion you will need to have your photos stored on the web somewhere and be accessible using a direct link (e.g. https:///www.yourwebsite.com/filename.jpg). Also you will need the <a href="https://plugins.qgis.org/plugins/qgis2web/" target="_blank">QGIS2Web Plugin</a> installed.</p><p class="" style="white-space:pre-wrap;">I’ve edited the attribute table of my geotagged photo layer to include a Description and URL fields that I’m going to use later for a quick web map. The URL and Description Fields are new fields that I’ve added to my table (which you won’t have in your table).</p><h3 style="white-space:pre-wrap;">Edit Attribute Table to include photo uRL</h3><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Toggle the Edit (pencil) button</p></li><li><p class="" style="white-space:pre-wrap;">Add New Field: input field name (e.g. URL) and field type (text or string) and length (e.g. 100). I’ve also added a description field to describe my photo.</p><p class="" style="white-space:pre-wrap;">e.g. &lt;img src="https://www.opengislab.com/s/DiamondHeadView.JPG" width="350" height="250"&gt;</p><p class="" style="white-space:pre-wrap;"><strong>Note</strong>: I chose to use the full &lt;img&gt; html tag in my URL (with widget type = text edit) as it’s easier to specify the width and height. The QGIS2Web plugin seems to only show the full photo size, which isn’t what I want. I’ve seen others use the photo field or a URL without &lt;img&gt; tag with widget type = Attachment and Integrated Document Viewer option as either Image or Web View with width and height set to either auto or actual values — Using these options doesn’t work for me and doesn’t produce the result I want.  </p></li><li><p class="" style="white-space:pre-wrap;">When done editing table, save it</p></li><li><p class="" style="white-space:pre-wrap;">Don’t forget to toggle off the Edit </p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598211388214_20771"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_256">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_255">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2500px;" id="yui_3_17_2_1_1682251996476_254">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_253">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:24.200000762939453%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_252">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598215342911-QK7LLXB0661AYYQ89HIO/Fig0004.jpg" alt="Fig0004.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598215342911-QK7LLXB0661AYYQ89HIO/Fig0004.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598215342911-QK7LLXB0661AYYQ89HIO/Fig0004.jpg" data-image-dimensions="2500x605" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42d4ab074c471375e9637c" data-type="image" style="left: 0%; top: -0.0456%; width: 100%; height: 100.091%; position: absolute;" alt="Fig0004.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0004.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_66749"><div class="sqs-block-content">
+
+<h3 style="white-space:pre-wrap;">Hide Unwanted Fields in Popup</h3><p class="" style="white-space:pre-wrap;">Lets say for my web map popup I only want to show the photos (i.e. URL field) and Description only. You can do this by hiding all the other fields you don’t want to display.</p><p class="" style="white-space:pre-wrap;">Open  Layer Properties:</p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Go to Attributes Form</p></li><li><p class="" style="white-space:pre-wrap;">Click on a field (e.g .photo)</p></li><li><p class="" style="white-space:pre-wrap;">Widget Type: Click drop down arrow &gt;&gt; Hidden</p></li><li><p class="" style="white-space:pre-wrap;">Make sure URL field and Description both have Widget Type = Text Edit</p></li><li><p class="" style="white-space:pre-wrap;">Click OK when done</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_68532"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_274">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_273">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2069px;" id="yui_3_17_2_1_1682251996476_272">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_271">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:57.3223762512207%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_270">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598223249167-G1CCQYNLMVZRTYDCRP8T/Fig0024.jpg" alt="Fig0024.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598223249167-G1CCQYNLMVZRTYDCRP8T/Fig0024.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598223249167-G1CCQYNLMVZRTYDCRP8T/Fig0024.jpg" data-image-dimensions="2069x1186" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42f38eef576864da1280f9" data-type="image" style="left: -0.0241779%; top: 0%; width: 100.048%; height: 100%; position: absolute;" alt="Fig0024.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0024.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_72794"><div class="sqs-block-content">
+
+<h3 style="white-space:pre-wrap;">Create Web Map Using QGIS2 Web Plugin</h3><p class="" style="white-space:pre-wrap;">You must aleady have the qgis2web plugin installed to do this portion.</p><p class="" style="white-space:pre-wrap;">Go to Web Menu &gt;&gt; qgis2web &gt;&gt; Create Web Map</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_121290"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_292">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_291">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:714px;" id="yui_3_17_2_1_1682251996476_290">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_289">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:35.99440002441406%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_288">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224192133-0H0ULKGTVARN42Y0VITK/Fig0025.jpg" alt="Fig0025.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224192133-0H0ULKGTVARN42Y0VITK/Fig0025.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224192133-0H0ULKGTVARN42Y0VITK/Fig0025.jpg" data-image-dimensions="714x257" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42f73fa662a5713459e70a" data-type="image" style="left: 0%; top: 0%; width: 100%; height: 100%; position: absolute;" alt="Fig0025.jpg" data-image-resolution="750w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0025.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_122636"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">In the Export to Web Map window: </p><ol data-rte-list="default"><li><p class="" style="white-space:pre-wrap;">Make sure your Geotagged Photo points are visible and popups are turned on. Noticed that only the URL and Description fields are visible. Also make sure you have a basemap (e.g. Stamen Toner Light). View the other tab options and make any changes you want.</p></li><li><p class="" style="white-space:pre-wrap;">Select Leaflet (seems to be option that works best)</p></li><li><p class="" style="white-space:pre-wrap;">Click Update Preview button to preview your map</p></li><li><p class="" style="white-space:pre-wrap;">Click Export if preview looks good</p></li></ol>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_128857"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_310">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_309">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2280px;" id="yui_3_17_2_1_1682251996476_308">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_307">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:59.298248291015625%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_306">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224993482-LQ0XBI7VQ7SQYI739PQX/Fig0026.jpg" alt="Fig0026.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224993482-LQ0XBI7VQ7SQYI739PQX/Fig0026.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598224993482-LQ0XBI7VQ7SQYI739PQX/Fig0026.jpg" data-image-dimensions="2280x1352" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42fa5f074c471375ee2989" data-type="image" style="left: 0%; top: -0.0117341%; width: 100%; height: 100.023%; position: absolute;" alt="Fig0026.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0026.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_129146"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">The Export tab has an option to Export to Folder or to an FTP site. The qgis2web plugin with export web files which you can put on a web server.</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_126974"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_328">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_327">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:202px;" id="yui_3_17_2_1_1682251996476_326">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_325">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:170.79208374023438%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_324">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225150151-IEPEXM9712A7HB1PDMAD/Fig0035.jpg" alt="Fig0035.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225150151-IEPEXM9712A7HB1PDMAD/Fig0035.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225150151-IEPEXM9712A7HB1PDMAD/Fig0035.jpg" data-image-dimensions="202x345" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42fafe381f2c334d5757e0" data-type="image" style="left: 0%; top: 0%; width: 100%; height: 100%; position: absolute;" alt="Fig0035.jpg" data-image-resolution="300w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0035.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_130540"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">The exported Leaflet web map (shown locally)</p>
+
+
+
+</div></div><div class="sqs-block image-block sqs-block-image sqs-text-ready" data-block-type="5" id="block-yui_3_17_2_1_1598218641453_131353"><div class="sqs-block-content" id="yui_3_17_2_1_1682251996476_346">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+    
+  
+    <div class="
+          image-block-outer-wrapper
+          layout-caption-below
+          design-layout-inline
+          combination-animation-none
+          individual-animation-none
+          individual-text-animation-none
+        " data-test="image-block-inline-outer-wrapper" id="yui_3_17_2_1_1682251996476_345">
+
+      
+
+      
+        <figure class="
+              sqs-block-image-figure
+              intrinsic
+            " style="max-width:2458px;" id="yui_3_17_2_1_1682251996476_344">
+          
+        
+        
+
+        
+          
+            
+          <div class="image-block-wrapper" data-animation-role="image" id="yui_3_17_2_1_1682251996476_343">
+            <div class="sqs-image-shape-container-element
+              
+          
+        
+              has-aspect-ratio
+            " style="
+                position: relative;
+                
+                  padding-bottom:63.10008239746094%;
+                
+                overflow: hidden;-webkit-mask-image: -webkit-radial-gradient(white, black);
+              " id="yui_3_17_2_1_1682251996476_342">
+                
+                  <noscript><img src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225111161-E7WCGYV30K3CJH25ICEV/Fig0027.jpg" alt="Fig0027.jpg" /></noscript><img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225111161-E7WCGYV30K3CJH25ICEV/Fig0027.jpg" data-image="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225111161-E7WCGYV30K3CJH25ICEV/Fig0027.jpg" data-image-dimensions="2458x1551" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5f42fad1327e111450a1e978" data-type="image" style="left: 0%; top: -0.0348805%; width: 100%; height: 100.07%; position: absolute;" alt="Fig0027.jpg" data-image-resolution="1500w" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/Fig0027.jpg">
+                
+            </div>
+          </div>
+        
+          
+        
+
+        
+      
+        </figure>
+      
+
+    </div>
+  
+
+
+  
+
+
+</div></div><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-yui_3_17_2_1_1598218641453_133732"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">That’s it for this post on mapping and viewing geotagged photos in QGIS. I hope you find it useful, and thanks for reading as always. Until next time :).</p>
+
+
+
+</div></div></div></div></div></div>
+  
+
+
+  <!--POST FOOTER-->
+
+  <footer>
+    <div class="meta">
+
+      
+
+      <div class="first meta-row">
+        <span class="categories"><span class="categories-title">In</span> <a href="https://opengislab.com/blog/category/2020" rel="tag">2020</a></span>
+        <span class="tags"><span class="tags-title">Tags</span> <a href="https://opengislab.com/blog/tag/QGIS+Geotagged+Photos" rel="tag">QGIS Geotagged Photos</a>, <a href="https://opengislab.com/blog/tag/Qgis2Web+Photos+Popup" rel="tag">Qgis2Web Photos Popup</a>, <a href="https://opengislab.com/blog/tag/Map+geotagged+photos" rel="tag">Map geotagged photos</a></span>
+      </div>
+
+      <div class="second meta-row">
+        
+  <span class="sqs-simple-like" data-item-id="5f42c31fd9abee0b99127e87" data-like-count="49" id="yui_3_17_2_1_1682251996476_620">
+    <span class="like-icon"></span>
+    <span class="like-count">49 Likes</span>
+  </span>
+
+        <span class="squarespace-social-buttons inline-style" data-system-data-id="1598225686658-VZCLK1D4OT799DOUZ9C1" data-asset-url="https://images.squarespace-cdn.com/content/v1/56f6ee5f8a65e2431330aac8/1598225686658-VZCLK1D4OT799DOUZ9C1/geotaggedPhotos.gif" data-record-type="1" data-full-url="/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis" data-title="Mapping and Viewing Geotagged Photos in QGIS"><div id="social-yui_3_17_2_1_1682251996476_546" class="yui3-widget yui3-socialbutton"><div id="yui_3_17_2_1_1682251996476_551" class="yui3-socialbutton-content"><div class="ss-social-button-wrapper"><div class="ss-social-button"><span class="ss-social-button-icon"></span>Share</div></div><div class="ss-social-list-wrapper"><div class="ss-social-button-list"></div></div></div></div></span>
+      </div>
+
+    </div>
+  </footer>
+
+
+  </article>
+
+
+
+<!--PAGINATION-->
+
+
+  <nav class="pagination clear">
+      <a class="prev-item" href="https://opengislab.com/blog/2020/9/27/exploring-mapstore-as-an-opensource-web-mapping-framework">← Exploring MapStore as an Opensource Web Mapping Framework</a><a class="next-item" href="https://opengislab.com/blog/2020/7/2/setup-qgis-print-layout-to-use-inch-instead-of-millimeter-unit">Setup QGIS Print Layout to use Inch Instead of Millimeter →</a>
+  </nav>
+
+
+
+  <!-- COMMENTS -->
+
+  <section id="comments-" class="comments-wrapper">
+    
+  <div class="squarespace-comments" id="comments-5f42c31fd9abee0b99127e87" data-item-id="5f42c31fd9abee0b99127e87" data-public-comment-count="22" data-comment-state="2"><div class="comments-content read-only" style="opacity: 1;"><section id="comments" data-dynamic-strings="">
+
+<!--COMMENTS HEADER-->
+<div class="header-controls">
+  <div class="controls">
+
+    <h3 class="comment-count">
+      <span>Comments (22)</span>
+    </h3>
+
+    <div class="comment-controls">
+
+      <span class="comment-sort">
+        <span>Newest First</span>
+        <select class="hidden-ordering">
+          <option value="1">Oldest First</option>
+          <option value="2" selected="selected">Newest First</option>
+          
+          <option value="3">Most Liked</option>
+          <option value="4">Least Liked</option>
+          
+        </select>
+      </span>
+    </div> 
+  </div>
+</div>
+
+
+<!--NEW COMMENT TOP-->
+
+<div class="new-comment-area top-level-comment-area edit-mode">
+<!--	<span class="squarespace-comment-login"></span>	<div class="new-comment-title">Add Comment</div>-->
+  <div class="input">
+    <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form">
+      <textarea class="comment-input" name="comment" data-defaulttext="Leave a comment here." data-edited="false"></textarea>
+    </form>
+  </div>
+  <div class="comment-btn-wrapper">
+
+    <span class="btn-text preview-comment top-level-preview-btn">Preview</span>
+    <!--toggle class on .new-comment-area to hide/show the appropriate button below
+    <span class="btn-text edit-comment">Edit</span>-->
+
+
+    
+      <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+        Comments Restricted
+      </span>
+    
+  </div>
+</div>
+
+
+
+
+
+
+<!--COMMENT LIST-->
+<div class="comment-list avatars-hidden" id="yui_3_17_2_1_1682251996476_666">
+  
+    <div id="comment-61c4d4b5c921b8223da7050c" class="comment clearfix read-only    " data-commentid="61c4d4b5c921b8223da7050c">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Victor</span>
+          
+          <span class="date"><time class="published" datetime="2021-12-23"><span class="timesince" data-date="1640289461083">A year ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Good afternoon, I hope I have made the proper translation.<br>Everything the guide shows is great but I have a problem.<br>I am configuring the form to export to Qfield, what I want is that when capturing field information the logo of a url appears, but it does not work in Qfiel. Use this script:</p>
+<p>'&lt;a href="https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800"&gt;<br>&lt;img src="https://empresas.blogthinkbig.com/wp-content/uploads/2019/11/Imagen3-245003649.jpg?w=800" alt="HTML tutorial" style="width:100px;height:100px;"&gt;<br>&lt;/a&gt;'.</p>
+<p>I hope you can help me.<br>Greetings</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="61c4d4b5c921b8223da7050c">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-617ca90e0b87a82570bbe987" class="comment clearfix read-only    " data-commentid="617ca90e0b87a82570bbe987">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Kaveh Ekbia</span>
+          
+          <span class="date"><time class="published" datetime="2021-10-29"><span class="timesince" data-date="1635559694115">A year ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi </p>
+<p>Thank you for this wonderful guidance. Is it possible for me to add a clickable link preview instead? </p>
+<p>Kaveh</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="617ca90e0b87a82570bbe987">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60cca2b66bbb4e43dd6d060f" class="comment clearfix read-only    " data-commentid="60cca2b66bbb4e43dd6d060f">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Human</span>
+          
+          <span class="date"><time class="published" datetime="2021-06-18"><span class="timesince" data-date="1624023734419">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Thanks a lot!<br>I have a question thou, what if instead of manually writing the description as text, I'd like the display to show specific Exif metadata fields that the images already contain</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="60cca2b66bbb4e43dd6d060f">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60c6b6598950f31a56d501d4" class="comment clearfix read-only    " data-commentid="60c6b6598950f31a56d501d4">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Ken Norris</span>
+          
+          <span class="date"><time class="published" datetime="2021-06-13"><span class="timesince" data-date="1623635545289">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Thanks for that. Works well except dealing with a mix of landscape and portrait photos. I tried various inputs but didn't manage to get them viewable in the correct orientation and size. Any hints?</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="60c6b6598950f31a56d501d4">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60cd53910b08964971094ac3" class="comment clearfix read-only reply-comment   " data-replyto="60c6b6598950f31a56d501d4" data-depth="1" data-commentid="60cd53910b08964971094ac3">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-06-18"><span class="timesince" data-date="1624069009751">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Ken,</p>
+<p>Please see if my comments to Tony (further down comments list) to see if it will helps. </p>
+<p>I would say the simple thing to do is create a rotate field in your attribute table then put in the rotation values for the photos. Then use this "rotate" field with the style transform:rotate. This will rotate your image based on the values (0 or 90) in your rotation field but your frame (width=350 and height=250) remains the same..won't be flipped. </p>
+<p>Something like this (supposing I have a fieldname called rotate). Eg. [%fieldnamegoeshere%]</p>
+<p>&lt;img src="file:///[%photo%]" width="350" height="250" style="transform:rotate([%rotate%]deg);"&gt;</p>
+<p>Hope this helps. </p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="60cd53910b08964971094ac3">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60b51ea276445555979f0b76" class="comment clearfix read-only    " data-commentid="60b51ea276445555979f0b76">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">m</span>
+          
+          <span class="date"><time class="published" datetime="2021-05-31"><span class="timesince" data-date="1622482594038">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>" &lt;img src="file:///[% photo %]" width="350" height="250"&gt;"</p>
+<p>this doesnt work at all, I see nothing despite having relative filepath in the project assign to "photo" field</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="60b51ea276445555979f0b76">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60b53a73195f100ad3f91ac2" class="comment clearfix read-only reply-comment   " data-replyto="60b51ea276445555979f0b76" data-depth="1" data-commentid="60b53a73195f100ad3f91ac2">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-05-31"><span class="timesince" data-date="1622489715079">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi,</p>
+<p>I'm not sure why you're not seeing your photos. But this: &lt;img src="file:///[%photo%]" width="350" height="250"&gt; works for me. </p>
+<p>My photo field attribute is: C:\Postings\GeotagPhotos\Photos\AjiTrainglePark.JPG</p>
+<p>The photo field that has the path to where your pictures are stored is written automatically by QGIS tool so do not change it - this is the absolute path name to your photos on your local drive. </p>
+<p>You could try: adding &lt;/img&gt;<br>&lt;img src="file:///[%photo%]" width="350" height="250"&gt; &lt;/img&gt;</p>
+<p>Maybe try using double slashes instead of 3 (some OS only requires 2 not 3 //)<br>&lt;img src="file://[%photo%]" width="350" height="250"&gt;</p>
+<p>Also don't forget that you also must have the map tip (popup tool) activated for the photos to display when you hover over the points.</p>
+<p>Good luck. </p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="60b53a73195f100ad3f91ac2">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-61531d0c8b5ed41b4010422b" class="comment clearfix read-only reply-comment   " data-replyto="60b53a73195f100ad3f91ac2" data-depth="2" data-commentid="61531d0c8b5ed41b4010422b">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Angel</span>
+          
+          <span class="date"><time class="published" datetime="2021-09-28"><span class="timesince" data-date="1632836877072">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hello from Spain.<br>The error is in the spaces before and after /// when copying and pasting the text from the web page.<br>It works for me by removing them:<br>&lt;img src = "file:///[%" photo "%]" width = "350" height = "250"&gt; &lt;/img&gt;</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="2" data-commentid="61531d0c8b5ed41b4010422b">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60ab6130e780cb5f5e9f10c6" class="comment clearfix read-only    " data-commentid="60ab6130e780cb5f5e9f10c6">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Evan Roy</span>
+          
+          <span class="date"><time class="published" datetime="2021-05-24"><span class="timesince" data-date="1621844272512">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Thank you for sharing this awesome post! You have put together everything so clearly. However, I have a problem 😌 The images show up correctly within qgis but when I export with qgis2web the images are way too big! I can't fix this...can you please help?</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="60ab6130e780cb5f5e9f10c6">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-60af3c62a9572a540db2c183" class="comment clearfix read-only reply-comment   " data-replyto="60ab6130e780cb5f5e9f10c6" data-depth="1" data-commentid="60af3c62a9572a540db2c183">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-05-27"><span class="timesince" data-date="1622096994091">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Evan,</p>
+<p>Are you talking about the popup box being too big (e.g. you have to scroll to see the picture in the popup?). Did you see my note in the section about Edit Attribute Table to Include Photo URL (Step 4 #2)</p>
+<p>Note: I chose to use the full &lt;img&gt; html tag in my URL (with widget type = text edit) as it’s easier to specify the width and height. The QGIS2Web plugin seems to only show the full photo size, which isn’t what I want. I’ve seen others use the photo field or a URL without &lt;img&gt; tag with widget type = Attachment and Integrated Document Viewer option as either Image or Web View with width and height set to either auto or actual values — Using these options doesn’t work for me and doesn’t produce the result I want. </p>
+<p>Maybe try specifying the width and height in the attribute table field (e.g. "URL"), like so<br>&lt;img src="https://www.opengislab.com/s/AjiTrainglePark.jpg" width="300" height="250"&gt;</p>
+<p>I much prefer this way as I can specify different width and height for individual photos.</p>
+<p>Then in the Display HTML Map Tip just use [% URL %].</p>
+<p>I hope this helps. </p>
+<p>Good luck with making it work.</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="60af3c62a9572a540db2c183">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-604f4518b2eba6767a7e7069" class="comment clearfix read-only    " data-commentid="604f4518b2eba6767a7e7069">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Tony Spiess</span>
+          
+          <span class="date"><time class="published" datetime="2021-03-15"><span class="timesince" data-date="1615807768739">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi, thanks nice clear instructions. Inserted my photos with &lt;img src="file:///[% photo %]" width="350" height="250" but there is an attribute field, Rotation (either 0 or 90), for either portrait or landscape.<br>As the syntax is very pickey how would you write the expression:<br>If Rotate-0, then &lt;img src="file:///[% photo %]" width="350" height="250", else &lt;img src="file:///[% photo %]" width="250" height="350"</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="604f4518b2eba6767a7e7069">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-605302e0370aa40304f04f9b" class="comment clearfix read-only reply-comment   " data-replyto="604f4518b2eba6767a7e7069" data-depth="1" data-commentid="605302e0370aa40304f04f9b">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-03-18"><span class="timesince" data-date="1616052960167">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Tony,</p>
+<p>HTML is really for layout not running conditional if else logic. I would say the simple thing to do is since you already have the rotation values in a "rotate" field then just use that with the style transform:rotate. This will rotate your image based on the values (0 or 90) in your rotation field but your frame (width=350 and height=250) remains the same..won't be flipped. Something like this:<br>&lt;img src="file:///[%photo%]" width="350" height="250" style="transform:rotate([%rotate%]deg);"&gt;</p>
+<p>Hope this helps.</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="605302e0370aa40304f04f9b">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-603d032f2d914d0b8c68d94d" class="comment clearfix read-only    " data-commentid="603d032f2d914d0b8c68d94d">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Andrea</span>
+          
+          <span class="date"><time class="published" datetime="2021-03-01"><span class="timesince" data-date="1614611247337">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Stephanie,<br>I follow your tip but it doesn't work and I don't understand why.<br>I used the script:<br> &lt;table&gt;<br> &lt;tr&gt;<br> &lt;th&gt;[% descriptio %]&lt;/th&gt;<br> &lt;/tr&gt;<br> &lt;tr&gt;<br> &lt;th&gt;&lt;img src="file:///[% photo %]" width="350" height="250"&gt;&lt;/th&gt;<br> &lt;/tr&gt;<br>&lt;/table&gt;<br>copying inside the [% photo%] the path of my jpg file indicated in the attribute table, but the question mark is always there. I have Windows 10, maybe depends on that. Thanks for your time.<br>Best regards</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="603d032f2d914d0b8c68d94d">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-603dde47072f451f2ed4734f" class="comment clearfix read-only reply-comment   " data-replyto="603d032f2d914d0b8c68d94d" data-depth="1" data-commentid="603dde47072f451f2ed4734f">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-03-02"><span class="timesince" data-date="1614667335516">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Andrea,</p>
+<p>I'm not sure what kind of error you are getting. But I assume your photos are stored on your computer (local drive). Using this example &lt;img src="file:///[%photo%]" width="350" height="250"&gt; still worked for me. </p>
+<p>I don't understand what you mean by copying inside the [%photo%] the path to your jpg file. Do you mean you are doing something like this?<br>&lt;img src="file:///C:\temp\myphotos\dog.jpg" width="350" height="250"&gt;</p>
+<p>If so then it will not work - QGIS can't find your photo. No need to copy and paste the path of your jpg file into the [%path%] portion. You are using a variable, that is [% photo%] to automatically tells QGIS where to look for the photos (i.e. the attribute value or path of your photo).</p>
+<p>Hope this helps. Good luck :)</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="603dde47072f451f2ed4734f">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-603e48950486a840c2c86df3" class="comment clearfix read-only reply-comment   " data-replyto="603dde47072f451f2ed4734f" data-depth="2" data-commentid="603e48950486a840c2c86df3">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Andrea</span>
+          
+          <span class="date"><time class="published" datetime="2021-03-02"><span class="timesince" data-date="1614694549423">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi Stephanie,<br>I solved. I found the problem that was in some setting of my computer.<br>I really like your site, I'm spending plenty of time on it to improve my knowledge. Thanks for your reply!</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="2" data-commentid="603e48950486a840c2c86df3">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-606d5c97286e044e6a149749" class="comment clearfix read-only reply-comment   " data-replyto="603e48950486a840c2c86df3" data-depth="3" data-commentid="606d5c97286e044e6a149749">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Vito</span>
+          
+          <span class="date"><time class="published" datetime="2021-04-07"><span class="timesince" data-date="1617779863731">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>what is your problem?<br>i have test the tutorial but doesn't work..</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="3" data-commentid="606d5c97286e044e6a149749">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-600b6c8cbf04aa2bc29f5d6f" class="comment clearfix read-only    " data-commentid="600b6c8cbf04aa2bc29f5d6f">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Bertram</span>
+          
+          <span class="date"><time class="published" datetime="2021-01-22"><span class="timesince" data-date="1611361420920">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi, thank you so much for this amazing tip!</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="600b6c8cbf04aa2bc29f5d6f">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-600b038eccfb5b0b9d562aeb" class="comment clearfix read-only    " data-commentid="600b038eccfb5b0b9d562aeb">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Fly</span>
+          
+          <span class="date"><time class="published" datetime="2021-01-22"><span class="timesince" data-date="1611334542200">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi, thanks for that tip, but my images are mostly rotated because I am left handed.<br>The images are shown top to bottom.</p>
+<p>How can this be solved without rotaing the images before ... we are talking about thousands of photos ...</p>
+<p>thanks</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="600b038eccfb5b0b9d562aeb">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-600c958d77e3432ce509c6a8" class="comment clearfix read-only reply-comment   " data-replyto="600b038eccfb5b0b9d562aeb" data-depth="1" data-commentid="600c958d77e3432ce509c6a8">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Stephanie Saephan</span>
+          
+          <span class="date"><time class="published" datetime="2021-01-23"><span class="timesince" data-date="1611437453177">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>Hi -</p>
+<p>You could try using including the style transform rotate in the HTML Map Tip . This would be the simplest solution (only if all your photos need rotating in one direction).</p>
+<p>Something like this<br>&lt;img src="your image" width="xx" height="xx" style="transform:rotate(90deg);"&gt;</p>
+<p>This would rotate all your images 90 degrees. </p>
+<p>Good luck. Hope it works for you.<br>Stephanie</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-depth="1" data-commentid="600c958d77e3432ce509c6a8">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-600994b490b1e30ab32f5ef0" class="comment clearfix read-only    " data-commentid="600994b490b1e30ab32f5ef0">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+              <a href="http://www.earthconsultu.com/" rel="nofollow">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+              </a>
+            
+          </div>
+          
+            <a href="http://www.earthconsultu.com/" rel="nofollow">
+          
+            <span class="author">Fred Lali</span>
+          
+            </a>
+          
+          <span class="date"><time class="published" datetime="2021-01-21"><span class="timesince" data-date="1611240628984">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>I finally got this done by you. Thank you!</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="600994b490b1e30ab32f5ef0">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-5ff50c6b7010996e321aaa4f" class="comment clearfix read-only    " data-commentid="5ff50c6b7010996e321aaa4f">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Luke</span>
+          
+          <span class="date"><time class="published" datetime="2021-01-05"><span class="timesince" data-date="1609895019607">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>FINALLY!! Just what I was looking for. Thanks for documenting this.</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="5ff50c6b7010996e321aaa4f">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+    <div id="comment-5fdb425e49e8de759fb5e11e" class="comment clearfix read-only    " data-commentid="5fdb425e49e8de759fb5e11e">
+
+      <div class="comment-header">
+        <div class="user-info">
+          <div class="avatar">
+            
+            
+              <img width="100%" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/default-avatar.png">
+            
+            
+          </div>
+          
+            <span class="author">Daniel</span>
+          
+          <span class="date"><time class="published" datetime="2020-12-17"><span class="timesince" data-date="1608204894087">2 years ago</span></time></span>
+          <span class="posting-text not-moderated">Pending</span>
+          <span class="posting-text moderated">Awaiting Moderation</span>
+          
+          <span class="likes">· 0 Likes</span>
+         </div>
+        <div class="controls">
+
+          <span class="squarespace-comment-buttons">
+            <span title="Report" class="flag comment-control"></span>
+            <span title="Like" class="like comment-control"></span>
+            <span title="Reply" class="reply comment-control"></span>
+            
+            
+          </span>
+        </div>
+      </div>
+
+      <div class="comment-body"><p>You can also use photos2shp command from https://github.com/idnael/daniGIS</p></div>
+
+
+
+    </div>
+      <!--NEW REPLY AREA-->
+
+      <div class="reply-area-wrapper" data-commentid="5fdb425e49e8de759fb5e11e">
+        <div class="new-comment-area reply-area edit-mode">
+          <div class="input">
+            <form action="https://opengislab.com/blog/2020/8/23/mapping-and-viewing-geotagged-photos-in-qgis#" method="post" class="comment-form reply-form">
+              <textarea class="comment-input reply-input" name="reply" data-defaulttext="Reply to this comment here." data-edited="false"></textarea>
+            </form>
+          </div>
+
+          <div class="comment-btn-wrapper">
+          <span class="btn-text preview-comment">Preview</span>
+        <!--<span class="btn-text edit-comment">Edit</span>-->
+
+
+            
+              <span class="comment-btn read-only sqs-system-button sqs-editable-button-font sqs-editable-button-shape sqs-button-element--primary">
+                Comments Restricted
+              </span>
+            
+          </div>
+        </div>
+      </div>
+  
+</div>
+
+
+
+</section></div></div>
+
+  </section>
+
+</div>
+
+<aside id="sidebar"><div class="sqs-layout sqs-grid-1 columns-1" data-layout-label="Blog Sidebar" data-type="block-field" data-updated-on="1651187675047" id="sidebarBlocks"><div class="row sqs-row"><div class="col sqs-col-1 span-1"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-bf6681777d15699ee39b"><div class="sqs-block-content">
+
+<h2 style="text-align:right;white-space:pre-wrap;">Latest Posts</h2>
+
+
+
+</div></div><div class="sqs-block summary-v2-block sqs-block-summary-v2" data-block-json="{&quot;hSize&quot;:null,&quot;floatDir&quot;:null,&quot;collectionId&quot;:&quot;56ff702537013bada72bf296&quot;,&quot;design&quot;:&quot;list&quot;,&quot;headerText&quot;:&quot;Featured&quot;,&quot;textSize&quot;:&quot;small&quot;,&quot;pageSize&quot;:4,&quot;imageAspectRatio&quot;:&quot;Auto&quot;,&quot;columnWidth&quot;:270,&quot;gutter&quot;:60,&quot;listImageSize&quot;:12,&quot;listImageAlignment&quot;:&quot;right&quot;,&quot;slidesPerRow&quot;:3,&quot;textAlignment&quot;:&quot;right&quot;,&quot;showTitle&quot;:true,&quot;showThumbnail&quot;:false,&quot;showExcerpt&quot;:false,&quot;showReadMoreLink&quot;:false,&quot;showPrice&quot;:true,&quot;productQuickViewEnabled&quot;:false,&quot;showPastOrUpcomingEvents&quot;:&quot;Upcoming&quot;,&quot;metadataPosition&quot;:&quot;above-title&quot;,&quot;primaryMetadata&quot;:&quot;date&quot;,&quot;secondaryMetadata&quot;:&quot;none&quot;,&quot;filter&quot;:{&quot;category&quot;:null,&quot;tag&quot;:null},&quot;autoCrop&quot;:true,&quot;lightbox&quot;:false,&quot;mixedContent&quot;:true,&quot;blockId&quot;:&quot;d4834f439b4191bc317e&quot;}" data-block-type="55" id="block-yui_3_17_2_5_1422549421630_10798"><div class="sqs-block-content">
+
+
+
+
+
+<div class="
+  summary-block-wrapper
+
+  summary-block-collection-type-blog
+
+  summary-block-setting-text-size-small
+  summary-block-setting-text-align-right
+
+  summary-block-setting-design-list
+  summary-block-setting-design-list-thumbnail-right
+
+  summary-block-setting-metadata-position-above-title
+  summary-block-setting-primary-metadata-date
+  summary-block-setting-secondary-metadata-none
+
+  
+  summary-block-setting-show-title
+  summary-block-setting-show-price
+  summary-block-setting-hide-excerpt
+  
+
+  
+
+  sqs-gallery-design-list
+
+  
+  ">
+
+  <div class="summary-item-list-container sqs-gallery-container" id="yui_3_17_2_1_1682251996476_394">
+
+    <header class="summary-block-header">
+      
+      <div class="summary-heading" data-animation-role="content">
+        
+          <span class="summary-header-text">Featured</span>
+        
+      </div>
+
+      
+      <div class="summary-carousel-pager sqs-gallery-controls" data-animation-role="content">
+        <span class="summary-carousel-pager-prev previous" tabindex="0" role="button" aria-label="Previous"></span>
+        <span class="summary-carousel-pager-next next" tabindex="0" role="button" aria-label="Next"></span>
+      </div>
+
+    </header>
+
+    <div class="summary-item-list sqs-gallery sqs-gallery-design-list" id="yui_3_17_2_1_1682251996476_413">
+      
+        <div class="summary-item
+          summary-item-record-type-text
+          sqs-gallery-design-list-slide
+          
+          
+            summary-item-has-thumbnail
+          
+          
+          summary-item-has-cats
+          summary-item-has-tags
+          summary-item-has-author
+          summary-item-has-comments-enabled
+          summary-item-has-location no-image sqs-active-slide" id="yui_3_17_2_1_1682251996476_418" data-type="image">
+
+          
+
+          <div class="summary-content sqs-gallery-meta-container" data-animation-role="content" style="width: 88%;">
+
+            
+            <div class="summary-metadata-container summary-metadata-container--above-title">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2023-03-12">Mar 12, 2023</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+              <div class="summary-title">
+                <a href="https://opengislab.com/blog/2023/3/11/how-to-incorporate-3d-models-into-qgis-to-create-a-3d-scene" class="summary-title-link">How to incorporate 3D models into a 3D Scene in QGIS using QGIS2threejs</a></div>
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-title">
+            
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2023-03-12">Mar 12, 2023</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+            
+
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-content">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2023-03-12">Mar 12, 2023</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+          </div>
+        </div>
+      
+        <div class="summary-item
+          summary-item-record-type-text
+          sqs-gallery-design-list-slide
+          
+          
+            summary-item-has-thumbnail
+          
+          
+          summary-item-has-cats
+          summary-item-has-tags
+          summary-item-has-author
+          summary-item-has-comments-enabled
+          summary-item-has-location no-image" id="yui_3_17_2_1_1682251996476_420" data-type="image">
+
+          
+
+          <div class="summary-content sqs-gallery-meta-container" data-animation-role="content" style="width: 88%;">
+
+            
+            <div class="summary-metadata-container summary-metadata-container--above-title">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-06-17">Jun 17, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+              <div class="summary-title">
+                <a href="https://opengislab.com/blog/2022/6/16/georeferencing-cad-dxf-with-qgis" class="summary-title-link">Georeferencing CAD DXF With QGIS</a></div>
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-title">
+            
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-06-17">Jun 17, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+            
+
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-content">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-06-17">Jun 17, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+          </div>
+        </div>
+      
+        <div class="summary-item
+          summary-item-record-type-text
+          sqs-gallery-design-list-slide
+          
+          
+            summary-item-has-thumbnail
+          
+          
+          summary-item-has-cats
+          summary-item-has-tags
+          summary-item-has-author
+          summary-item-has-comments-enabled
+           no-image" id="yui_3_17_2_1_1682251996476_422" data-type="image">
+
+          
+
+          <div class="summary-content sqs-gallery-meta-container" data-animation-role="content" style="width: 88%;">
+
+            
+            <div class="summary-metadata-container summary-metadata-container--above-title">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-04-12">Apr 12, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+              <div class="summary-title">
+                <a href="https://opengislab.com/blog/2022/4/12/connecting-to-google-cloud-storage-in-arcgis-pro" class="summary-title-link">Connecting to Google Cloud Storage in ArcGIS Pro</a></div>
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-title">
+            
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-04-12">Apr 12, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+            
+
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-content">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-04-12">Apr 12, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+          </div>
+        </div>
+      
+        <div class="summary-item
+          summary-item-record-type-text
+          sqs-gallery-design-list-slide
+          
+          
+            summary-item-has-thumbnail
+          
+          
+          summary-item-has-cats
+          summary-item-has-tags
+          summary-item-has-author
+          summary-item-has-comments-enabled
+           no-image" id="yui_3_17_2_1_1682251996476_424" data-type="image">
+
+          
+
+          <div class="summary-content sqs-gallery-meta-container" data-animation-role="content" style="width: 88%;">
+
+            
+            <div class="summary-metadata-container summary-metadata-container--above-title">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-02-27">Feb 27, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+              <div class="summary-title">
+                <a href="https://opengislab.com/blog/2022/2/26/dem-and-contour-visualization-in-qgis" class="summary-title-link">DEM and Contour Visualization in QGIS</a></div>
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-title">
+            
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-02-27">Feb 27, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+            
+              
+            
+
+            
+
+            
+            <div class="summary-metadata-container summary-metadata-container--below-content">
+              
+              <div class="summary-metadata summary-metadata--primary">
+
+	
+	  
+	    <!-- Timestamp -->
+	    <time class="summary-metadata-item summary-metadata-item--date" datetime="2022-02-27">Feb 27, 2022</time>
+	  
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+              
+              <div class="summary-metadata summary-metadata--secondary">
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            </div>
+
+          </div>
+        </div>
+      
+    </div>
+  </div>
+</div>
+</div></div></div></div></div></aside>
+    </section>
+
+    <div class="extra-wrapper page-footer">
+      <div class="sqs-layout sqs-grid-12 columns-12" data-layout-label="Footer Content: Blog" data-type="block-field" data-updated-on="1584325163789" id="page-footer-56ff702537013bada72bf296"><div class="row sqs-row"><div class="col sqs-col-12 span-12"><div class="sqs-block newsletter-block sqs-block-newsletter rendered" data-block-type="51" id="block-yui_3_17_2_8_1464078290685_6121"><div class="sqs-block-content">
+
+
+
+
+<div class="newsletter-form-wrapper
+  
+  newsletter-form-wrapper--layoutFloat
+  newsletter-form-wrapper--alignCenter
+  
+  ">
+  <form class="newsletter-form" data-form-id="574534a8d51cd40946286990" autocomplete="on" method="POST" novalidate="" onsubmit="return (function (form) {
+    Y.use(&#39;squarespace-form-submit&#39;, &#39;node&#39;, function usingFormSubmit(Y) {
+      (new Y.Squarespace.FormSubmit(form)).submit({
+        formId: &#39;574534a8d51cd40946286990&#39;,
+        collectionId: &#39;&#39;,
+        objectName: &#39;page-footer-56ff702537013bada72bf296&#39;
+      });
+    });
+    return false;
+  })(this);">
+    <header class="newsletter-form-header">
+      <h2 class="newsletter-form-header-title">Subscribe</h2>
+      <div class="newsletter-form-header-description"><p>Sign up with your email address to receive blog post updates.</p></div>
+    </header>
+    <div class="newsletter-form-body">
+      <div class="newsletter-form-fields-wrapper form-fields" style="vertical-align: middle;">
+        
+        
+          
+            <div id="email-yui_3_17_2_8_1464078290685_6128" class="newsletter-form-field-wrapper form-item field email required" style="vertical-align: bottom;">
+              <label class="newsletter-form-field-label title" for="email-yui_3_17_2_8_1464078290685_6128-field">Email Address</label>
+              <input id="email-yui_3_17_2_8_1464078290685_6128-field" class="newsletter-form-field-element field-element" name="email" x-autocompletetype="email" autocomplete="email" type="email" spellcheck="false" placeholder="Email Address">
+            </div>
+          
+        
+          
+        
+      </div>
+      <div data-animation-role="button" class="newsletter-form-button-wrapper submit-wrapper" style="vertical-align: middle;">
+        <button class="
+            newsletter-form-button
+            sqs-system-button
+            sqs-editable-button-layout
+            sqs-editable-button-style
+            sqs-editable-button-shape
+            sqs-button-element--primary
+          " type="submit" value="Sign Up">
+          <span class="newsletter-form-spinner sqs-spin light large"></span>
+          <span class="newsletter-form-button-label">Sign Up</span>
+          <span class="newsletter-form-button-icon"></span>
+        </button>
+      </div>
+      
+        <div class="model"></div>
+        
+      
+    </div>
+    <div class="newsletter-form-footnote"><p>We respect your privacy.</p></div>
+    <div class="hidden form-submission-text"><p class="">Thank you for subscribing to open.gis.lab.</p></div>
+    <div class="hidden form-submission-html" data-submission-html=""></div>
+  </form>
+</div>
+</div></div></div></div></div>
+    </div>
+
+    <div class="page-divider"></div>
+
+    <footer id="footer">
+      <div class="sqs-layout sqs-grid-1 columns-1" data-layout-label="Footer Content" data-type="block-field" data-updated-on="1643245589379" id="footerBlock"><div class="row sqs-row"><div class="col sqs-col-1 span-1"><div class="sqs-block html-block sqs-block-html" data-block-type="2" id="block-179f8c9da7aa428c1198"><div class="sqs-block-content">
+
+<p class="" style="white-space:pre-wrap;">© 2022.&nbsp;open.gis.lab </p>
+
+
+
+</div></div></div></div></div>
+      
+        
+        <div id="socialLinks" class="social-links sqs-svg-icon--list" data-content-field="connected-accounts">
+          
+
+
+  <a href="mailto:stephanie@opengislab.com" target="_blank" class="sqs-svg-icon--wrapper email">
+    <div>
+      <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+        <use class="sqs-use--icon" xlink:href="#email-icon"></use>
+        <use class="sqs-use--mask" xlink:href="#email-mask"></use>
+      </svg>
+    </div>
+  </a>
+
+  <a href="https://github.com/StephSaephan" target="_blank" class="sqs-svg-icon--wrapper github">
+    <div>
+      <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+        <use class="sqs-use--icon" xlink:href="#github-icon"></use>
+        <use class="sqs-use--mask" xlink:href="#github-mask"></use>
+      </svg>
+    </div>
+  </a>
+
+  <a href="http://www.linkedin.com/in/stephanie-saephan" target="_blank" class="sqs-svg-icon--wrapper linkedin">
+    <div>
+      <svg class="sqs-svg-icon--social" viewBox="0 0 64 64">
+        <use class="sqs-use--icon" xlink:href="#linkedin-icon"></use>
+        <use class="sqs-use--mask" xlink:href="#linkedin-mask"></use>
+      </svg>
+    </div>
+  </a>
+
+
+        </div>
+        
+      
+    </footer>
+
+  </div>
+
+  <div></div>
+
+  <script defer="defer" src="./Mapping and Viewing Geotagged Photos in QGIS — open.gis.lab_files/site-bundle.js" type="text/javascript"></script>
+
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="display:none" data-usage="social-icons-svg"><symbol id="email-icon" viewBox="0 0 64 64"><path d="M17,22v20h30V22H17z M41.1,25L32,32.1L22.9,25H41.1z M20,39V26.6l12,9.3l12-9.3V39H20z"></path></symbol><symbol id="email-mask" viewBox="0 0 64 64"><path d="M41.1,25H22.9l9.1,7.1L41.1,25z M44,26.6l-12,9.3l-12-9.3V39h24V26.6z M0,0v64h64V0H0z M47,42H17V22h30V42z"></path></symbol><symbol id="github-icon" viewBox="0 0 64 64"><path d="M32,16c-8.8,0-16,7.2-16,16c0,7.1,4.6,13.1,10.9,15.2 c0.8,0.1,1.1-0.3,1.1-0.8c0-0.4,0-1.4,0-2.7c-4.5,1-5.4-2.1-5.4-2.1c-0.7-1.8-1.8-2.3-1.8-2.3c-1.5-1,0.1-1,0.1-1 c1.6,0.1,2.5,1.6,2.5,1.6c1.4,2.4,3.7,1.7,4.7,1.3c0.1-1,0.6-1.7,1-2.1c-3.6-0.4-7.3-1.8-7.3-7.9c0-1.7,0.6-3.2,1.6-4.3 c-0.2-0.4-0.7-2,0.2-4.2c0,0,1.3-0.4,4.4,1.6c1.3-0.4,2.6-0.5,4-0.5c1.4,0,2.7,0.2,4,0.5c3.1-2.1,4.4-1.6,4.4-1.6 c0.9,2.2,0.3,3.8,0.2,4.2c1,1.1,1.6,2.5,1.6,4.3c0,6.1-3.7,7.5-7.3,7.9c0.6,0.5,1.1,1.5,1.1,3c0,2.1,0,3.9,0,4.4 c0,0.4,0.3,0.9,1.1,0.8C43.4,45.1,48,39.1,48,32C48,23.2,40.8,16,32,16z"></path></symbol><symbol id="github-mask" viewBox="0 0 64 64"><path d="M0,0v64h64V0H0z M37.1,47.2c-0.8,0.2-1.1-0.3-1.1-0.8c0-0.5,0-2.3,0-4.4c0-1.5-0.5-2.5-1.1-3 c3.6-0.4,7.3-1.7,7.3-7.9c0-1.7-0.6-3.2-1.6-4.3c0.2-0.4,0.7-2-0.2-4.2c0,0-1.3-0.4-4.4,1.6c-1.3-0.4-2.6-0.5-4-0.5 c-1.4,0-2.7,0.2-4,0.5c-3.1-2.1-4.4-1.6-4.4-1.6c-0.9,2.2-0.3,3.8-0.2,4.2c-1,1.1-1.6,2.5-1.6,4.3c0,6.1,3.7,7.5,7.3,7.9 c-0.5,0.4-0.9,1.1-1,2.1c-0.9,0.4-3.2,1.1-4.7-1.3c0,0-0.8-1.5-2.5-1.6c0,0-1.6,0-0.1,1c0,0,1,0.5,1.8,2.3c0,0,0.9,3.1,5.4,2.1 c0,1.3,0,2.3,0,2.7c0,0.4-0.3,0.9-1.1,0.8C20.6,45.1,16,39.1,16,32c0-8.8,7.2-16,16-16c8.8,0,16,7.2,16,16 C48,39.1,43.4,45.1,37.1,47.2z"></path></symbol><symbol id="linkedin-icon" viewBox="0 0 64 64"><path d="M20.4,44h5.4V26.6h-5.4V44z M23.1,18c-1.7,0-3.1,1.4-3.1,3.1c0,1.7,1.4,3.1,3.1,3.1 c1.7,0,3.1-1.4,3.1-3.1C26.2,19.4,24.8,18,23.1,18z M39.5,26.2c-2.6,0-4.4,1.4-5.1,2.8h-0.1v-2.4h-5.2V44h5.4v-8.6 c0-2.3,0.4-4.5,3.2-4.5c2.8,0,2.8,2.6,2.8,4.6V44H46v-9.5C46,29.8,45,26.2,39.5,26.2z"></path></symbol><symbol id="linkedin-mask" viewBox="0 0 64 64"><path d="M0,0v64h64V0H0z M25.8,44h-5.4V26.6h5.4V44z M23.1,24.3c-1.7,0-3.1-1.4-3.1-3.1c0-1.7,1.4-3.1,3.1-3.1 c1.7,0,3.1,1.4,3.1,3.1C26.2,22.9,24.8,24.3,23.1,24.3z M46,44h-5.4v-8.4c0-2,0-4.6-2.8-4.6c-2.8,0-3.2,2.2-3.2,4.5V44h-5.4V26.6 h5.2V29h0.1c0.7-1.4,2.5-2.8,5.1-2.8c5.5,0,6.5,3.6,6.5,8.3V44z"></path></symbol></svg>
+
+
+
+
+
+
+<div id="yui3-css-stamp" style="position: absolute !important; visibility: hidden !important"></div></body></html>
